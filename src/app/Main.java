@@ -1,51 +1,38 @@
 package app;
 
+import manager.HttpRequestManager;
 import model.Title;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import reader.LeitorCSV;
+
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
-        //Stream<String> todasLinhas = Files.lines(Paths.get("netflix-titles.csv").toAbsolutePath(), StandardCharsets.ISO_8859_1).skip(1);
+        List<Title> movies = LeitorCSV.csvToList("netflix-movies.csv");
+        List<Title> tvShows = LeitorCSV.csvToList("netflix-tvShows.csv");
 
-        List<Title> titles = null;
+        //movies.forEach(System.out::println);
+        //tvShows.forEach(System.out::println);
 
-        try (BufferedReader br = new BufferedReader(new FileReader("netflix-titles.csv"))) {
+        String filme = "Ganglands";
+        String response = HttpRequestManager.requestPorTitulo(filme);
+        System.out.println(response);
 
-            titles = br.lines()
-                    .skip(1).map(line -> {
-                        String t[] = line.split(";");
-                        return new Title.Builder()
-                                .showId(t[0])
-                                .type(t[1])
-                                .title(t[2])
-                                .director(t[3])
-                                .cast(t[4])
-                                .country(t[5])
-                                .dateAdded(t[6])
-                                .releaseYear(t[7])
-                                .rating(t[8])
-                                .duration(t[9])
-                                .listedIn(t[10])
-                                .description(t[11])
-                                .build();
-                    })
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Pattern pattern = Pattern.compile("imdbRating\":\"[\\d*].[\\d]\"");
+        Matcher matcher = pattern.matcher(response);
+        matcher.find();
+        String imdbRating = matcher.group(0);
 
-        //titles.forEach(System.out::println);
+        System.out.println(imdbRating);
 
-        System.out.println(titles.get(1).getDirector());
+        Double imdbRatingDouble = Double.valueOf(
+                imdbRating.substring(imdbRating.indexOf(":"), imdbRating.length() - 1).substring(2));
+        System.out.println(imdbRatingDouble);
 
     }
 }

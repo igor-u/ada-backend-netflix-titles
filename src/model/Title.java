@@ -7,21 +7,21 @@ import java.time.Year;
 
 public class Title {
 
-    protected Title() {
+    public Title() {
     }
 
-    protected String showId;
-    protected String type;
-    protected String title;
-    protected String director;
-    protected String cast;
-    protected String country;
-    protected LocalDate dateAdded;
-    protected Year releaseYear;
-    protected String rating;
-    protected Integer duration;
-    protected String listedIn;
-    protected String description;
+    public String showId;
+    public String type;
+    public String title;
+    public String director;
+    public String cast;
+    public String country;
+    public LocalDate dateAdded;
+    public Year releaseYear;
+    public String rating;
+    public Integer duration;
+    public String listedIn;
+    public String description;
 
     public String getShowId() {
         return showId;
