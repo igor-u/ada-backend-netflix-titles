@@ -2,6 +2,7 @@ package model;
 
 import manager.DateManager;
 import manager.TimeManager;
+
 import java.time.LocalDate;
 import java.time.Year;
 
@@ -10,18 +11,18 @@ public class Title {
     public Title() {
     }
 
-    public String showId;
-    public String type;
-    public String title;
-    public String director;
-    public String cast;
-    public String country;
-    public LocalDate dateAdded;
-    public Year releaseYear;
-    public String rating;
-    public Integer duration;
-    public String listedIn;
-    public String description;
+    private String showId;
+    private String type;
+    private String title;
+    private String director;
+    private String cast;
+    private String country;
+    private LocalDate dateAdded;
+    private Year releaseYear;
+    private String rating;
+    private Integer duration;
+    private String listedIn;
+    private String description;
 
     public String getShowId() {
         return showId;
@@ -73,11 +74,13 @@ public class Title {
 
     @Override
     public String toString() {
-        return this.title;
+        return "{title: " + this.title + ";" +
+                "type: " + this.type + ";" +
+                "release_year: " + this.releaseYear + "}";
     }
 
     public static class Builder {
-        private Title title = new Title();
+        private final Title title = new Title();
 
         public Builder showId(String showId) {
             this.title.showId = showId;
