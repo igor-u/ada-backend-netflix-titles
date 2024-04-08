@@ -5,6 +5,7 @@ import model.Title;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,7 @@ public class LeitorCSV {
 
         List<Title> lista = null;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path, StandardCharsets.ISO_8859_1))) {
 
             lista = br.lines()
                     .skip(1).map(line -> {

@@ -21,16 +21,10 @@ public class Main {
 
         IMDbManager imdbManager= new IMDbManager();
 
-        movies.forEach(m -> {
-            try {
-                System.out.println(imdbManager.createTitleWithRating(m));
-                return;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        long start = System.currentTimeMillis();
+        List<TitleWithIMDbRating> tvShowsWithImdbRating = imdbManager.toTitlesWithImdbRating(movies);
+        long finish = System.currentTimeMillis();
 
+        System.out.println(finish - start);
     }
 }
