@@ -6,25 +6,38 @@ import model.TitleWithIMDbRating;
 import reader.LeitorCSV;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class Main {
 
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        List<Title> movies = LeitorCSV.csvToList("netflix-movies.csv");
-        //List<Title> tvShows = LeitorCSV.csvToList("netflix-tvShows.csv");
+        List<Title> movies = LeitorCSV.toList("netflix-movies.csv");
+        //List<Title> tvShows = LeitorCSV.toList("netflix-tvShows.csv");
 
         //movies.forEach(System.out::println);
         //tvShows.forEach(System.out::println);
 
-        IMDbManager imdbManager= new IMDbManager();
+        IMDbManager imdbManager = new IMDbManager();
 
-        long start = System.currentTimeMillis();
-        List<TitleWithIMDbRating> tvShowsWithImdbRating = imdbManager.toTitlesWithImdbRating(movies);
-        long finish = System.currentTimeMillis();
+        List<TitleWithIMDbRating> moviesWithImdbRating = imdbManager
+                .toTitlesWithRating(movies);
 
-        System.out.println(finish - start);
+            long start = System.currentTimeMillis();
+            imdbManager.toTitlesWithRating(movies);
+            long finish = System.currentTimeMillis();
+            System.out.println("Duração :" + (finish - start));
+            Optional<TitleWithIMDbRating> movieComNotaMaisAlta = moviesWithImdbRating
+                    .stream()
+                    .filter(t -> t != null)
+                    .max(Comparator.comparing(t -> t.getImdbRating()));
+
+            System.out.println("Filme com nota mais alta: " + movieComNotaMaisAlta.get());
+
     }
 }

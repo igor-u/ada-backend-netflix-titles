@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class IMDbManager {
+public class IMDbManagerTesteThread {
 
     private Pattern imdbRatingpattern = Pattern.compile("imdbRating\":\"[\\d*].[\\d]\"");
 
@@ -31,8 +31,9 @@ public class IMDbManager {
 
     }
 
-    public List<TitleWithIMDbRating> toTitlesWithRating(List<Title> titles) {
-        List<TitleWithIMDbRating> titlesWithImdbRating = titles.parallelStream().limit(20)
+    public void toTitlesWithRating(List<Title> titles, List<TitleWithIMDbRating> titles2) {
+
+        var titles3 = titles.stream()
                 .map(t -> {
             try {
                 System.out.println(createTitleWithRating(t));
@@ -42,9 +43,11 @@ public class IMDbManager {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-        }).collect(Collectors.toList());
+        }).filter(t -> t != null)
+                .collect(Collectors.toList());
 
-        return titlesWithImdbRating;
+        titles2.addAll(titles3);
+
     }
 
 }

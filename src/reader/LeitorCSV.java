@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class LeitorCSV {
 
-    public static List<Title> csvToList(String path) {
+    public static List<Title> toList(String path) {
 
         List<Title> lista = null;
 
