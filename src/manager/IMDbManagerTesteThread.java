@@ -26,7 +26,7 @@ public class IMDbManagerTesteThread {
 
             titleIMDbRating = new TitleWithIMDbRating(title, imdbRatingDouble);
         }
-
+        System.out.println(titleIMDbRating);
         return titleIMDbRating;
 
     }
@@ -35,15 +35,14 @@ public class IMDbManagerTesteThread {
 
         var titles3 = titles.stream()
                 .map(t -> {
-            try {
-                System.out.println(createTitleWithRating(t));
-                return createTitleWithRating(t);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).filter(t -> t != null)
+                    try {
+                        return createTitleWithRating(t);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).filter(t -> t != null)
                 .collect(Collectors.toList());
 
         titles2.addAll(titles3);

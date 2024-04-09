@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 public class Main {
 
@@ -31,13 +28,13 @@ public class Main {
             long start = System.currentTimeMillis();
             imdbManager.toTitlesWithRating(movies);
             long finish = System.currentTimeMillis();
-            System.out.println("Duração :" + (finish - start));
-            Optional<TitleWithIMDbRating> movieComNotaMaisAlta = moviesWithImdbRating
+            System.out.println("Duração: " + (finish - start) + " milissegundos");
+
+            Optional<TitleWithIMDbRating> filmeComNotaMaisAlta = moviesWithImdbRating
                     .stream()
-                    .filter(t -> t != null)
                     .max(Comparator.comparing(t -> t.getImdbRating()));
 
-            System.out.println("Filme com nota mais alta: " + movieComNotaMaisAlta.get());
+            System.out.println("Filme com nota mais alta: " + filmeComNotaMaisAlta.get());
 
     }
 }

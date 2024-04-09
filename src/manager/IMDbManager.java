@@ -26,23 +26,24 @@ public class IMDbManager {
 
             titleIMDbRating = new TitleWithIMDbRating(title, imdbRatingDouble);
         }
-
+        System.out.println(titleIMDbRating);
         return titleIMDbRating;
 
     }
 
     public List<TitleWithIMDbRating> toTitlesWithRating(List<Title> titles) {
-        List<TitleWithIMDbRating> titlesWithImdbRating = titles.parallelStream().limit(20)
+        List<TitleWithIMDbRating> titlesWithImdbRating = titles.parallelStream()
+                //.limit(50)
                 .map(t -> {
-            try {
-                System.out.println(createTitleWithRating(t));
-                return createTitleWithRating(t);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }).collect(Collectors.toList());
+                    try {
+                        return createTitleWithRating(t);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).filter(t -> t != null)
+                .collect(Collectors.toList());
 
         return titlesWithImdbRating;
     }

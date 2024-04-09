@@ -19,10 +19,10 @@ public class MainComThread {
         List<Title> movies = LeitorCSV.toList("netflix-movies.csv");
         //List<Title> tvShows = LeitorCSV.toList("netflix-tvShows.csv");
 
-        List<Title> movies1 = movies.subList(0, 500);
-        List<Title> movies2 = movies.subList(501, 1000);
-        List<Title> movies3 = movies.subList(1001, 1500);
-        List<Title> movies4 = movies.subList(1501, 2000);
+        List<Title> movies1 = movies.subList(0, 1531);
+        List<Title> movies2 = movies.subList(1532, 3060);
+        List<Title> movies3 = movies.subList(3061, 4591);
+        List<Title> movies4 = movies.subList(4592, 6130);
 
         //movies.forEach(System.out::println);
         //tvShows.forEach(System.out::println);
@@ -42,17 +42,15 @@ public class MainComThread {
 
         while(!service.isTerminated()) {
             Thread.sleep(5000);
-            System.out.println("Thread sleeping, tamanho da lista: " + listaTeste.size());
         }
         long finish = System.currentTimeMillis();
+        System.out.println("Duração: " + (finish - start) + " milissegundos");
 
-        System.out.println("Duração :" + (finish - start));
-
-        Optional<TitleWithIMDbRating> movieComNotaMaisAlta = listaTeste
+        Optional<TitleWithIMDbRating> filmeComNotaMaisAlta = listaTeste
                 .stream()
                 .max(Comparator.comparing(t -> t.getImdbRating()));
 
-        System.out.println("Filme com nota mais alta: " + movieComNotaMaisAlta.get());
+        System.out.println("Filme com nota mais alta: " + filmeComNotaMaisAlta.get());
 
     }
 }
